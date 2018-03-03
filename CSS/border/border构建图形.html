@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>CSS3利用border属性构建图形</title>
+    <style>
+        /* 利用border属性构建三角形:将元素内容宽高设为0,分别调节各方向上的border实现 */
+        
+        div {
+            margin-bottom: 10px;
+        }
+        
+        .triangle_up {
+            width: 0;
+            height: 0;
+            /* border-top: 50px solid transparent; */
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            border-bottom: 50px solid red;
+        }
+        
+        .triangle_down {
+            width: 0;
+            height: 0;
+            border-top: 50px solid red;
+            border-left: 50px solid transparent;
+            border-right: 50px solid transparent;
+            /* border-bottom: 50px solid transparent; */
+        }
+        
+        .triangle_left {
+            width: 0;
+            height: 0;
+            border-top: 50px solid transparent;
+            border-left: 50px solid red;
+            /* border-right: 50px solid transparent; */
+            border-bottom: 50px solid transparent;
+        }
+        
+        .triangle_right {
+            width: 0;
+            height: 0;
+            border-top: 50px solid transparent;
+            /* border-left: 50px solid transparent; */
+            border-right: 50px solid red;
+            border-bottom: 50px solid transparent;
+        }
+        
+        .crossSquare {
+            width: 0;
+            height: 0;
+            border-top: 50px solid blue;
+            border-left: 50px solid green;
+            border-right: 50px solid red;
+            border-bottom: 50px solid black;
+        }
+        
+        .logo {
+            height: 100px;
+            width: 100px;
+        }
+        
+        .logo div {
+            margin: 0;
+        }
+        
+        .top_left {
+            width: 0;
+            height: 0;
+            float: left;
+            border-top: 50px solid white;
+            border-left: 50px solid white;
+        }
+        
+        .top_right {
+            width: 0;
+            height: 0;
+            float: left;
+            border-top: 50px solid blue;
+            border-left: 50px solid blue;
+            /* border-right: 0 solid transparent;
+            border-bottom: 0 solid transparent; */
+        }
+        
+        .bottom_left {
+            width: 0;
+            height: 0;
+            float: left;
+            border-top: 50px solid black;
+            border-left: 50px solid black;
+        }
+        
+        .bottom_right {
+            width: 0;
+            height: 0;
+            float: left;
+            border-top: 50px solid green;
+            border-left: 50px solid green;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 正三角形 -->
+    <div class="triangle_up"></div>
+    <!-- 倒三角形 -->
+    <div class="triangle_down"></div>
+    <!-- 左三角形 -->
+    <div class="triangle_left"></div>
+    <!-- 右三角形 -->
+    <div class="triangle_right"></div>
+    <!-- 十字图形 -->
+    <div class="crossSquare"></div>
+    <!--设置一个logo  -->
+    <div class="logo">
+        <div class="top_left"></div>
+        <div class="top_right"></div>
+        <div class="bottom_left"></div>
+        <div class="bottom_right"></div>
+    </div>
+</body>
+
+</html>
