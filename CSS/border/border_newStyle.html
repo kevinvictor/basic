@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>利用CSS3border构建一个新样式</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        .main {
+            width: 800px;
+            height: 300px;
+            border: 1px solid grey;
+            margin: 20px auto;
+            position: relative;
+        }
+        
+        .logo {
+            height: 212px;
+            width: 212px;
+            background: gray;
+            color: white;
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            margin: auto auto;
+            text-align: center;
+            transform: rotate(45deg);
+        }
+        
+        .logo .txt {
+            padding-top: 70px;
+            transform: rotate(-45deg);
+        }
+        
+        .logo h3,
+        .logo p {
+            width: 150px;
+        }
+        
+        .content {
+            clear: both;
+        }
+        
+        .con_left {
+            background: red;
+            float: left;
+            height: 130px;
+            width: 230px;
+            margin: 10px;
+        }
+        
+        .con_right {
+            background: red;
+            float: right;
+            height: 130px;
+            width: 230px;
+            margin: 10px;
+        }
+        
+        .left_style1,
+        .left_style2 {
+            margin-left: -10px;
+            margin-top: 10px;
+            float: left;
+            width: 0;
+            height: 0;
+        }
+        
+        .right_style1,
+        .right_style2 {
+            margin-right: -10px;
+            margin-top: 10px;
+            float: right;
+            width: 0;
+            height: 0;
+        }
+        
+        .left_style1 {
+            border-top: 65px solid red;
+            border-left: 65px solid red;
+            border-right: 65px solid transparent;
+            border-bottom: 65px solid transparent;
+        }
+        
+        .left_style2 {
+            border-top: 65px solid transparent;
+            border-left: 65px solid red;
+            border-right: 65px solid transparent;
+            border-bottom: 65px solid red;
+        }
+        
+        .right_style1 {
+            border-top: 65px solid red;
+            border-left: 65px solid transparent;
+            border-right: 65px solid red;
+            border-bottom: 65px solid transparent;
+        }
+        
+        .right_style2 {
+            border-top: 65px solid transparent;
+            border-left: 65px solid transparent;
+            border-right: 65px solid red;
+            border-bottom: 65px solid red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="main">
+        <div class="logo">
+            <div class="txt">
+                <h3>这是标题</h3>
+                <p>这是段落</p>
+            </div>
+        </div>
+        <div class="content">
+            <div class="con_left">这是内容</div>
+            <div class="left_style1"></div>
+            <div class="con_right">这是内容</div>
+            <div class="right_style1"></div>
+        </div>
+        <div class="content">
+            <div class="con_left">这是内容</div>
+            <div class="left_style2"></div>
+            <div class="con_right">这是内容</div>
+            <div class="right_style2"></div>
+        </div>
+    </div>
+</body>
+
+</html>
