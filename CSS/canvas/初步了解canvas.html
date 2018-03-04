@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>接触canvas</title>
+</head>
+
+<body>
+    <canvas id="myCanvas1" width="400" height="250" style="border:1px solid"></canvas>
+    <canvas id="myCanvas2" width="400" height="250" style="border:1px solid"></canvas>
+    <script>
+        // 获取画布对象
+        var myCanvas1 = document.getElementById('myCanvas1');
+        // 获取画布context对象（作画的范围和方式）
+        var cvs1 = myCanvas1.getContext('2d');
+        // 操作一个红色的实心矩形
+        cvs1.fillStyle = 'red'; //实心画笔的颜色
+        cvs1.fillRect(10, 10, 300, 200); //(x,y,width,height)
+
+
+        var myCanvas2 = document.getElementById('myCanvas2');
+        var cvs2 = myCanvas2.getContext('2d');
+        // 操作一个绿色的空心圆形
+        cvs2.strokeStyle = 'green'; //空心画笔的颜色
+        // 画圆相对于更复杂，应先用beginPath（）方法声明
+        cvs2.beginPath();
+        // 确定圆的大小，位置等
+        cvs2.arc(50, 50, 30, 0, 2 * Math.PI); //(x,y,,r,start,end)
+        //画笔画圆
+        cvs2.stroke();
+    </script>
+</body>
+
+
+
+</html>
