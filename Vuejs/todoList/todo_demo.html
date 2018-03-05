@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>todoList</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/vue.min.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <input class="txt" type="text" v-model="task.content" placeholder="编写任务" @keyup.enter="addTask">
+        <ul class="sheet" v-for="(item,index) in list">
+            <li :class="{'delete':item.deleted}"><input @click="changeState(index)" type="checkbox" :checked="item.finished"><span :class="{'finish':item.finished}">{{item.content}}</span>
+                <span class="del" @click="deleteTask(index)">delete</span></li>
+        </ul>
+    </div>
+    <script>
+        // 构建一个Vue实例
+        var app = new Vue({
+            el: "#app",
+            data: {
+                // 默认
+                task: {
+                    content: '', //内容为空
+                    finished: false, //未完成
+                    deleted: false //未删除
+                },
+                // 任务列表
+                list: []
+            },
+            methods: {
+                // 添加任务
+                addTask: function() {
+                    // 将task储存在list中
+                    this.list.push(this.task);
+                    // 重置task
+                    this.task = {
+                        content: '',
+                        finished: false,
+                        deleted: false
+                    };
+                },
+                // 改变任务完成的状态
+                changeState: function(index) {
+                    var curState = this.list[index].finished;
+                    this.list[index].finished = !curState;
+                },
+                // 删除任务
+                deleteTask: function(index) {
+                    this.list[index].deleted = true;
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
