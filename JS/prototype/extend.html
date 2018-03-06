@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>关于继承</title>
+</head>
+
+<body>
+    <script>
+        // function Animal() {
+        //     this.species = "动物";
+        // }
+
+        function Cat(name, color) {
+            this.name = name;
+            this.color = color;
+        }
+
+        // 1、构造函数绑定(通过call或apply方法)
+        // function Cat(name, color) {
+        //     Animal.apply(this, arguments); //父对象绑定在子对象中
+        //     this.name = name;
+        //     this.color = color;
+        // }
+        // var cat1 = new Cat("大毛", "黄色");
+        // alert(cat1.species);
+
+        // 2、prototype模式
+        // Cat.prototype = new Animal(); //将Cat的prototype对象指向一个Animal实例
+        // Cat.prototype.constructor = Cat; //将Cat的prototype对象constructor属性重新指回Cat，否则是Animal
+        // var cat1 = new Cat("大毛", "黄色");
+        // alert(cat1.species);
+
+        // 3、直接继承prototype(在2的基础上改进)
+        function Animal() {};
+        Animal.prototype.species = "动物";
+        // Cat.prototype = Animal.prototype;
+        // Cat.prototype.constructor = Cat;
+        // var cat1 = new Cat("大毛", "黄色");
+        // alert(cat1.species);
+
+        // 4、利用空对象作为中介继承(在3的基础上改进)
+        // var F = function() {};
+        // F.prototype = Animal.prototype;
+        // Cat.prototype = new F();
+        // Cat.prototype.constructor = Cat;
+        // var cat1 = new Cat("大毛", "黄色");
+        // alert(cat1.species);
+
+        // 对4的方法进行封装
+        function extend(Child, Parent) {
+            var F = function() {};
+            F.prototype = Parent.prototype;
+            Child.prototype = new F();
+            Child.prototype.constructor = Child;
+            Child.uber = Parent.prototype; //为子对象设置一个uber属性直接指向父对象的prototype属性,实现继承的完备性
+        }
+        extend(Cat, Animal);
+        var cat1 = new Cat("大毛", "黄色");
+        alert(cat1.species);
+
+        // 5、拷贝继承
+        function extend2(Child, Parent) {
+            var p = Parent.prototype;
+            var c = Child.prototype;
+            for (var i in p) {
+                c[i] = p[i];
+            }
+            c.uber = p;
+        }
+        extend2(Cat, Animal);
+        var cat1 = new Cat("大毛", "黄色");
+        alert(cat1.species);
+    </script>
+</body>
+
+</html>
