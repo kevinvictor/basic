@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>关于非构造函数的继承</title>
+</head>
+
+<body>
+    <script>
+        // 两个普通对象的继承
+        var Chinese = {
+            nation: "中国人",
+            birthPlaces: ['上海', '北京', '广州']
+        }
+
+        // var Doctor = {
+        //     career: "医生"
+        // }
+
+        //封装一个函数object()实现
+        // function object(o) {
+        //     var F = function() {};
+        //     F.prototype = o;
+        //     return new F();
+        // }
+        // var Doctor = object(Chinese);
+        // Doctor.career = "医生";
+        // alert(Doctor.career + " " + Doctor.nation);
+
+        // 浅拷贝(拷贝基本类型的数据,父对象属性不能是数组或对象)
+        // function extendCopy(p) {
+        //     var c = {};
+        //     for (var i in p) {
+        //         c[i] = p[i];
+        //     }
+        //     c.uber = p;
+        //     return c;
+        // }
+        // var Doctor = extendCopy(Chinese);
+        // Doctor.career = "医生";
+        // alert(Doctor.career + " " + Doctor.nation);
+
+        // 深拷贝(递归调用浅拷贝实现)
+        function deepCopy(p, c) {
+            var c = c || {};
+            for (var i in p) {
+                if (typeof p[i] === 'object') {
+                    c[i] = (p[i].constructor === Array) ? [] : {};
+                    deepCopy(p[i], c[i]);
+                } else {
+                    c[i] = p[i];
+                }
+            }
+            return c;
+        }
+
+        var Doctor = deepCopy(Chinese, Doctor);
+        Doctor.career = "医生";
+        Doctor.birthPlaces.push('四川');
+        console.log(Doctor.nation);
+        console.log(Chinese.birthPlaces);
+        console.log(Doctor.birthPlaces);
+    </script>
+</body>
+
+</html>
