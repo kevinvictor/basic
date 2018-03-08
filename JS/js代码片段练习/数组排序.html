@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>数组排序</title>
+</head>
+
+<body>
+    <script>
+        // 按顺序排序,用sort方法；(针对纯数字数组)
+        var arr = [1, 4, 9, 2, 6, 3, 4, 5];
+        // 升序
+        // arr.sort(function(a, b) {
+        //     return a - b;
+        // });
+        // ES6写法
+        arr.sort((a, b) => (a - b));
+        console.log(arr);
+        // 降序
+        arr.sort((a, b) => (b - a));
+        console.log(arr);
+
+        //如果不是纯数字数字，按照某种属性排序
+        var newArr = [{
+            'a': 1,
+            'b': 2,
+            'c': 3
+        }, {
+            'a': 4,
+            'b': 1,
+            'c': 6
+        }, {
+            'a': 2,
+            'b': 3,
+            'c': 4
+        }];
+        //upOrDown参数是调节排序是升还是降（-1为升序，1为降序）；
+        function result(arr, propName, upOrDown) {
+            return arr.sort(function(a, b) {
+                return -upOrDown * (a[propName] - b[propName]);
+            });
+        }
+        var n = result(newArr, 'b', -1);
+        console.log(n);
+
+        //随机排序(限纯数字数组);
+        var arr1 = [2, 4, 1, 5, 6, 3];
+        // 默认修改原数组,当returnArr参数为true时返回一个新数组,不会修改原数组
+        function afterSort(arr, returnNew) {
+            if (returnNew) {
+                arr = arr.concat();
+            }
+            return arr.sort(function(a, b) {
+                return (Math.random() - 0.5); //表示随机返回
+            })
+        }
+        console.log("修改后的原数组：", arr1, "默认条件下的返回值：", afterSort(arr1));
+        console.log("未修改的原数组：", arr1, "非默认条件下的返回值：", afterSort(arr1, 1));
+
+        // 随机排序(不限类型);
+        var arr2 = ['2', 1, [2, 2], {
+            'a': 1
+        }];
+
+        function afterSort1(arr, returnNew) {
+            if (returnNew) {
+                arr = arr.concat();
+            }
+            var len = arr.length;
+            while (len > 0) {
+                random_num = Math.floor(Math.random() * len);
+                arr.push(arr[random_num]);
+                arr.splice(random_num, 1);
+                len--;
+            }
+            return arr;
+        }
+
+        console.log("未修改的原数组：", arr2, "非默认条件下的返回值：", afterSort(arr2, 1));
+        console.log("修改后的原数组：", arr2, "默认条件下的返回值：", afterSort(arr2));
+
+        // 冒泡排序
+        function bubbleSort(arr) {
+            var i, j, temp, len = arr.length;
+            for (i = 0; i < len - 1; i++) {
+                for (j = i + 1; j < len; j++) {
+                    // "<"未降序,">"为升序
+                    if (arr[i] < arr[j]) {
+                        temp = arr[i];
+                        arr[i] = arr[j];
+                        arr[j] = temp;
+                    }
+                }
+            }
+            return arr;
+        }
+        var arr3 = [3, 5, 1, 9, 5, 8, 3];
+        bubbleSort(arr3);
+        console.log("冒泡排序:", arr3);
+    </script>
+</body>
+
+</html>

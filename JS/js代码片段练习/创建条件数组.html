@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>创建条件数组</title>
+</head>
+
+<body>
+    <script>
+        // 创建值均为"a"，长度为1000的数组(限字符串)
+        function makeArr(propName, length) {
+            return (new Array(length + 1).join(propName).split(''));
+        }
+        console.log(makeArr('a', 1000));
+
+        // 不限类型
+        function makeArr1(arr, propName, length) {
+            while (length > 0) {
+                arr.push(propName);
+                length--;
+            }
+            return arr;
+        }
+        var arr = [];
+        makeArr1(arr, {
+            "b": 1
+        }, 4);
+        console.log(arr);
+
+        //创建一个长度为100的数组,内部原数为规定范围内的随机数字字符串;
+        function makeArr2(arr, start, end) {
+            // start,end两个参数可以不要，此时默认分别为1和100
+            start = start === undefined ? 1 : start;
+            end = end === undefined ? 100 : end;
+            if (start >= end) {
+                end = start + 100;
+            }
+            var len = end - start;
+            for (var i = 0; i < 100; i++) {
+                randomStr = '' + (Math.floor(Math.random() * len) + start);
+                arr.push(randomStr);
+            }
+            return arr;
+        }
+        var newArr = [];
+        makeArr2(newArr);
+        console.log(newArr);
+
+        // 随机生成指定长度的字符串
+        function makeStr(len) {
+            var str = 'abcdefghijklmnopqrstuvwxyz0123456789';
+            var temp = '';
+            while (len > 0) {
+                temp += str.charAt(Math.floor(Math.random() * str.length));
+                len--;
+            }
+            return temp;
+        }
+
+        console.log(makeStr(8));
+    </script>
+</body>
+
+</html>

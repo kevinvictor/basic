@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>数组和字符串的一些条件问题</title>
+</head>
+
+<body>
+    <script>
+        // 找出下列正数组中最大两数的差值
+        // 利用sort方法排序后直接调用最大和最小
+        var arr = [1, 53, 24, 8, 46];
+
+        function maxRes(arr) {
+            arr.sort((a, b) => (a - b));
+            return arr[arr.length - 1] - arr[0];
+        }
+        console.log(maxRes(arr));
+
+        // 通过Math.max和min得到
+        function maxRes1(arr) {
+            var max = arr[0];
+            var min = arr[0];
+            for (var i = 1; i < arr.length; i++) {
+                max = Math.max(max, arr[i]);
+                min = Math.min(min, arr[i]);
+            }
+            return max - min;
+        }
+        console.log(maxRes1(arr));
+
+        // 不借助临时变量，交换两个整数(利用a=(a+b)-a实际上是a=b)
+        function exchange(a, b) {
+            a = a - b;
+            b = a + b;
+            a = b - a;
+            return [a, b];
+        }
+        console.log(exchange(1, 2));
+
+        // 输出字符串中重复次数最多的字符及其次数
+        // 利用String.prototype.split() 和 Array.prototype.join()
+        function getRes(str) {
+            var maxStr, maxNum = 0,
+                splitStr = [],
+                charNum;
+            while (str.length > 0) {
+                splitStr = str.split(str[0]);
+                charNum = splitStr.length - 1;
+                if (charNum > maxNum) {
+                    maxNum = charNum;
+                    maxStr = str[0];
+                }
+                str = splitStr.join('');
+            }
+            return {
+                maxStr: maxStr,
+                maxNum: maxNum
+            };
+        }
+        var str = 'aacdacdaa';
+        console.log(getRes(str));
+
+        //利用Object特性
+        function getRes1(str) {
+            var maxChar, maxTimes = 0;
+            var obj = {};
+            for (var i = 0; i < str.length; i++) {
+                if (!obj[str.charAt(i)]) {
+                    obj[str.charAt(i)] = 1;
+                } else {
+                    obj[str.charAt(i)]++;
+                }
+            }
+
+            for (var key in obj) {
+                if (obj[key] > maxTimes) {
+                    maxTimes = obj[key];
+                    maxChar = key;
+                }
+            }
+
+            return {
+                maxChar: maxChar,
+                maxTimes: maxTimes
+            }
+        }
+        var str1 = 'bbbcdcbb';
+        console.log(getRes1(str1));
+    </script>
+
+</body>
+
+</html>
