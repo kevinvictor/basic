@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jQuery实现下拉菜单小demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        li {
+            list-style: none;
+            margin: 1px 0 1px 0;
+        }
+        
+        a {
+            text-align: center;
+            display: inline-block;
+            width: 100px;
+            height: 30px;
+            line-height: 30px;
+            padding: 10px;
+            background: #DDD;
+            color: #000;
+            text-decoration: none;
+        }
+        
+        #first_ul>li {
+            float: left;
+        }
+        
+        .menu {
+            width: 650px;
+            margin: auto;
+        }
+        
+        a:hover {
+            color: #fff;
+            background: #ccc;
+        }
+        
+        .second_ul {
+            display: none;
+        }
+    </style>
+    <script src="jquery-3.3.1.min.js"></script>
+    <script>
+        $(function() {
+            // 通过鼠标移入移除触发菜单显示隐藏事件
+            $("#first_ul>li").mouseover(function() {
+                $(this).children("ul").show();
+            });
+            $("#first_ul>li").mouseout(function() {
+                $(this).children("ul").hide();
+            });
+            // 通过点击事件触发
+            // $("#first_ul>li").click(function() {
+            //     $(this).children("ul").toggle();
+            // })
+        });
+    </script>
+</head>
+
+<body>
+    <div class="menu">
+        <ul id="first_ul">
+            <li><a href="#">首页</a></li>
+            <li><a href="#">课程大厅</a>
+                <ul class="second_ul">
+                    <li><a href="#">javascript</a></li>
+                    <li><a href="#">jQuery</a></li>
+                </ul>
+            </li>
+            <li><a href="#">学习中心</a>
+                <ul class="second_ul">
+                    <li><a href="#">视频学习</a></li>
+                    <li><a href="#">案例学习</a></li>
+                    <li><a href="#">交流平台</a></li>
+                </ul>
+            </li>
+            <li><a href="#">经典案例</a></li>
+            <li><a href="#">关于我们</a></li>
+        </ul>
+    </div>
+</body>
+
+</html>
