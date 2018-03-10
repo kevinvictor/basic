@@ -51,7 +51,7 @@ function say(word) {
 }
 say('hi');
 ```
-## 2、const定义只读变量(常量)
+## 2、const定义只读变量(常量特性)
 1. 常量特点:不可修改  
 ```js
 const Name = '张三';
