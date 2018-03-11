@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>星级评分demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        ul {
+            width: 200px;
+            margin: 50px auto;
+        }
+        
+        .rating-item {
+            list-style: none;
+            float: left;
+            background: url("img/dot_01.gif") no-repeat;
+            width: 27px;
+            height: 24px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <ul class="rating" id="rating">
+        <li class="rating-item" title="很不好"></li>
+        <li class="rating-item" title="不好"></li>
+        <li class="rating-item" title="一般"></li>
+        <li class="rating-item" title="好"></li>
+        <li class="rating-item" title="非常好"></li>
+    </ul>
+    <script src="../jquery-3.3.1.min.js"></script>
+    <script>
+        var $rating = $("#rating"),
+            $item = $rating.find(".rating-item");
+        var num = 2;
+        //将点亮星星事件赋给变量lightOn
+        var lightOn = function(num) {
+            $rating.find(".rating-item").each(function(index) {
+                if (index < num) {
+                    $(this).css("background", "url('img/dot_02.gif') no-repeat");
+                } else {
+                    $(this).css("background", "url('img/dot_01.gif') no-repeat");
+                }
+            });
+        };
+        // 默认点亮两颗星
+        lightOn(num);
+
+        $item.on("mouseover", function() {
+            lightOn($(this).index() + 1);
+        }).on("click", function() {
+            num = $(this).index() + 1;
+        });
+        $rating.on("mouseout", function() {
+            lightOn(num);
+        })
+    </script>
+</body>
+
+</html>

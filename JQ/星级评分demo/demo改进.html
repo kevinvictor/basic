@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>星级评分demo</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        ul {
+            width: 200px;
+            margin: 50px auto;
+        }
+        
+        .rating-item {
+            list-style: none;
+            float: left;
+            background: url("img/dot_01.gif") no-repeat;
+            width: 27px;
+            height: 24px;
+            margin: 0 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <ul class="rating" id="rating">
+        <li class="rating-item" title="很不好"></li>
+        <li class="rating-item" title="不好"></li>
+        <li class="rating-item" title="一般"></li>
+        <li class="rating-item" title="好"></li>
+        <li class="rating-item" title="非常好"></li>
+    </ul>
+    <ul class="rating" id="rating2">
+        <li class="rating-item" title="很不好"></li>
+        <li class="rating-item" title="不好"></li>
+        <li class="rating-item" title="一般"></li>
+        <li class="rating-item" title="好"></li>
+        <li class="rating-item" title="非常好"></li>
+    </ul>
+
+    <script src="../jquery-3.3.1.min.js"></script>
+    <script>
+        // * 代码中的问题:
+        // * 1.含有过多的全局变量num,$rating,$item等，多人共同开发时容易造成变量同名导致全局变量污染从而
+        //   被覆盖产生bug（模拟命名空间或者用闭包解决）
+        // * 2.事件绑定的写法为每颗星星都绑定了事件，当星星数过多时造成浪费
+        //  （事件委托（事件代理）：根据冒泡的特性，在父容器上绑定一次事件即可，通过判断在父元素中判断是不是相应的子元素触发了相应的事件）
+        // * 3.不能实现代码复用，多个评分要通过复制代码修改后使用。
+
+        // 改进后的代码
+        //通过闭包将变量设置为局部变量
+        var rating = (function() {
+
+            //lightOn只需声明一次,因此可以写在init的外面,但因此造成$item是init内部的变量,不能访问.因此可以将其设置为参数
+            var lightOn = function($item, num) {
+                $item.each(function(index) {
+                    if (index < num) {
+                        $(this).css("background", "url('img/dot_02.gif') no-repeat");
+                    } else {
+                        $(this).css("background", "url('img/dot_01.gif') no-repeat");
+                    }
+                });
+            };
+
+            // 将el和num值以参数的形式传进，不写死，达到代码复用的作用
+            var init = function(el, num) {
+                var $rating = $(el),
+                    $item = $rating.find(".rating-item");
+
+                //初始化默认
+                lightOn($item, num);
+
+                // 通过事件委托只用绑定一次事件，而不用为每个星星绑定事件而造成浪费
+                $rating.on("mouseover", ".rating-item", function() {
+                    lightOn($item, $(this).index() + 1);
+                }).on("click", ".rating-item", function() {
+                    num = $(this).index() + 1;
+                }).on("mouseout", function() {
+                    lightOn($item, num);
+                });
+            };
+
+            // 将这个功能包装成jQuery插件
+            $.fn.extend({
+                // 这里没有el参数，因为this调用就是el
+                rating: function(num) {
+                    //这里的是this.each而不是this的原因是可能是多个对象调用
+                    return this.each(function() {
+                        init(this, num);
+                    });
+                }
+            });
+
+            return {
+                init: init
+            };
+        })();
+
+        rating.init("#rating", 2);
+        // 使用封装的jQuery插件
+        $("#rating2").rating(4);
+
+
+
+        //之前的代码
+        // var $rating = $("#rating"),
+        //     $item = $rating.find(".rating-item"),
+        //     num = 2;
+
+        // //将点亮星星事件赋给变量lightOn
+        // var lightOn = function(num) {
+        //     $rating.find(".rating-item").each(function(index) {
+        //         if (index < num) {
+        //             $(this).css("background", "url('img/dot_02.gif') no-repeat");
+        //         } else {
+        //             $(this).css("background", "url('img/dot_01.gif') no-repeat");
+        //         }
+        //     });
+        // };
+
+        // // 默认点亮两颗星
+        // lightOn(num);
+
+        // // 触发星级评分事件
+        // $item.on("mouseover", function() {
+        //     lightOn($(this).index() + 1);
+        // }).on("click", function() {
+        //     num = $(this).index() + 1;
+        // });
+        // $rating.on("mouseout", function() {
+        //     lightOn(num);
+        // })
+    </script>
+</body>
+
+</html>
