@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>焦点轮播图</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        a {
+            text-decoration: none;
+        }
+        
+        #container {
+            width: 600px;
+            height: 400px;
+            margin: auto;
+            border: 3px solid green;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        #list {
+            position: absolute;
+            left: -600px;
+            width: 4200px;
+            height: 600px;
+            z-index: 1;
+        }
+        
+        #list img {
+            float: left;
+        }
+        
+        #buttons {
+            position: absolute;
+            left: 250px;
+            bottom: 20px;
+            width: 100px;
+            height: 10px;
+            z-index: 2;
+        }
+        
+        #buttons span {
+            margin: 0 5px 0 5px;
+            float: left;
+            display: block;
+            width: 10px;
+            height: 10px;
+            border-radius: 5px;
+            background: #DDD;
+            cursor: pointer;
+        }
+        
+        #buttons span.on {
+            background: orange;
+        }
+        
+        .arrow {
+            display: none;
+            position: absolute;
+            top: 180px;
+            width: 40px;
+            height: 40px;
+            font-size: 35px;
+            line-height: 35px;
+            color: #FFF;
+            font-weight: bold;
+            z-index: 2;
+            background: rgba(0, 0, 0, .3);
+            text-align: center;
+        }
+        
+        #container:hover .arrow {
+            display: block;
+        }
+        
+        .arrow:hover {
+            background: rgba(0, 0, 0, .5);
+        }
+        
+        #prev {
+            left: 10px;
+        }
+        
+        #next {
+            right: 10px;
+        }
+    </style>
+    <script src="../jquery-1.12.4.js"></script>
+    <script>
+        $(function() {
+            var $container = $("#container");
+            var $buttons = $('#buttons span');
+            var index = 1;
+            var animated = false;
+            var timer;
+
+            // 按钮变换样式事件
+            function showBtn() {
+                $buttons.removeClass("on");
+                $($buttons[index - 1]).addClass('on');
+            }
+
+            //图片轮滑事件
+            function animate(offset) {
+                animated = true;
+                var $curListLeft = parseInt($("#list").css("left"));
+                var time = 300; //位移总时间
+                var interval = 10; //位移间隔时间
+                var speed = offset / (time / interval); //每次位移的量(速度)
+
+                function go() {
+                    var $newLeft = parseInt($("#list").css("left"));
+                    if ((speed < 0 && $newLeft > $curListLeft + offset) || (speed > 0 && $newLeft < $curListLeft + offset)) {
+                        $("#list").css("left", $newLeft + speed + 'px');
+                        setTimeout(go, interval);
+                    } else {
+                        animated = false;
+                        $("#list").css("left", $curListLeft + offset + 'px');
+                        if ($curListLeft + offset > -600) {
+                            $("#list").css("left", "-3000px");
+                        } else if ($curListLeft + offset < -3000) {
+                            $("#list").css("left", "-600px");
+                        }
+                    }
+                }
+                go();
+            }
+
+            //定时切换事件
+            function play() {
+                timer = setInterval(function() {
+                    $('#next').click();
+                }, 3000);
+            }
+
+            function stop() {
+                clearInterval(timer);
+            }
+            // 鼠标放在图片上,则清楚定时器
+            $container.mouseover(stop);
+            // 鼠标移开图片,则实现轮播
+            $container.mouseout(play);
+            // 初始化自动轮播
+            play();
+
+            // 通过点击向后对象，切换图片和按钮样式
+            $('#next').click(function() {
+                if (index == 5) {
+                    index = 1;
+                } else {
+                    index++;
+                }
+                showBtn();
+                // 如果在执行动画,则不会调用animate事件.
+                if (!animated) {
+                    animate(-600);
+                }
+            });
+
+            // 通过点击向前对象，切换图片和按钮样式
+            $('#prev').click(function() {
+                if (index == 1) {
+                    index = 5;
+                } else {
+                    index--;
+                }
+                showBtn();
+                if (!animated) {
+                    animate(600);
+                }
+            });
+
+            // 点击按钮，切换图片和按钮样式
+            for (var i = 0; i < $buttons.length; i++) {
+                $($buttons[i]).click(function() {
+                    // 点击本身就处于该状态的按钮时，直接什么都不执行
+                    if ($(this).hasClass("on")) {
+                        return;
+                    }
+                    // 原理：根据按钮之间的index属性的值关联图片位置之间的关系
+                    var myIndex = parseInt($(this).attr("index"));
+                    var offset = -600 * (myIndex - index);
+                    index = myIndex;
+                    animate(offset);
+                    showBtn();
+                });
+            }
+        });
+    </script>
+</head>
+
+<body>
+    <div id="container">
+        <div id="list">
+            <img src="img/5.jpg" alt="5">
+            <img src="img/1.jpg" alt="1">
+            <img src="img/2.jpg" alt="2">
+            <img src="img/3.jpg" alt="3">
+            <img src="img/4.jpg" alt="4">
+            <img src="img/5.jpg" alt="5">
+            <img src="img/1.jpg" alt="1">
+        </div>
+        <div id="buttons">
+            <span index="1" class="on"></span>
+            <span index="2"></span>
+            <span index="3"></span>
+            <span index="4"></span>
+            <span index="5"></span>
+        </div>
+        <a href="#" id="prev" class="arrow">&lt;</a>
+        <a href="#" id="next" class="arrow">&gt;</a>
+    </div>
+</body>
+
+</html>
