@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>实现页面一个圆形的可点区域</title>
+    <style>
+        a {
+            display: block;
+            margin: 50px auto;
+            height: 0;
+            width: 0;
+            border: 50px solid red;
+            border-radius: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <a href="#"></a>
+    <script>
+        // js的方式实现
+        // document.onclick = function(e) {
+        //     var x1 = 100,
+        //         y1 = 100,
+        //         r = 100,
+        //         x2 = e.clientX,
+        //         y2 = e.clientY;
+        //     console.log(x2, y2);
+        //     var distance = Math.abs(Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2)));
+        //     if (distance <= r) {
+        //         console.log('在圆形区域内');
+        //     } else {
+        //         console.log('不在圆形区域内');
+
+        //     }
+        // }
+    </script>
+</body>
+
+</html>
