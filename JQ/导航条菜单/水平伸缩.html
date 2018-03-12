@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>简单垂直导航菜单的实现</title>
+    <style>
+        ul,
+        li,
+        a {
+            margin: 0;
+            padding: 0;
+        }
+        
+        ul {
+            height: 42px;
+            border-bottom: 10px solid orange;
+        }
+        
+        a {
+            border: 2px solid #ccc;
+            border-bottom: none;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            display: block;
+            text-decoration: none;
+            width: 100px;
+            height: 30px;
+            line-height: 30px;
+            padding: 5px;
+            text-align: center;
+            background: #ddd;
+            color: #000;
+        }
+        
+        li {
+            float: left;
+            list-style: none;
+        }
+        
+        a:hover {
+            background: orange;
+            border: 2px solid orange;
+            color: #fff;
+        }
+    </style>
+</head>
+
+<body>
+    <ul id="menu">
+        <li>
+            <a href="#">首页</a>
+        </li>
+        <li>
+            <a href="#">新闻快讯</a>
+        </li>
+        <li>
+            <a href="#">产品展示</a>
+        </li>
+        <li>
+            <a href="#">售后服务</a>
+        </li>
+        <li>
+            <a href="#">联系我们</a>
+        </li>
+    </ul>
+
+    <script src="../jquery-3.3.1.min.js"></script>
+    <script>
+        // 原生js实现
+        // var menus = document.getElementsByTagName("a");
+        // var timer;
+        // for (var i = 0; i < menus.length; i++) {
+        //     menus[i].onmouseover = function() {
+        //         var that = this;
+        //         timer = setInterval(function() {
+        //             that.style.width = that.offsetWidth + 1 + "px";
+        //             if (parseInt(that.style.width) > 150) {
+        //                 clearInterval(timer);
+        //             }
+        //         }, 50);
+        //     }
+        //     menus[i].onmouseout = function() {
+        //         var that = this;
+        //         clearInterval(timer);
+        //         that.style.width = "100px";
+        //     }
+        // }
+
+        // jQuery实现
+        $("a").hover(function() {
+            $(this).animate({
+                "width": "150px"
+            }, 300);
+        }, function() {
+            $(this).animate({
+                "width": "100px"
+            }, 300);
+        });
+    </script>
+</body>
+
+</html>
