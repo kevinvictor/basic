@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>如何居中一个div</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        div {
+            width: 400px;
+            height: 200px;
+        }
+        
+        .first {
+            /* 设置一个普通div居中(设置宽度,margin值auto) */
+            margin: 0 auto;
+            background: red;
+        }
+        
+        .secParent {
+            height: 300px;
+            width: 600px;
+            border: 1px solid gray;
+            position: relative;
+        }
+        
+        .second {
+            /* 设置一个浮动元素上下左右居中,其父元素position设置成非static,
+            将该元素position设置成绝对定位,left和top都设置成50%,margin-top
+            为其高度的负一半,margin-left为其宽度的负一半 
+            */
+            float: left;
+            background: gray;
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            margin: -100px 0 0 -200px;
+        }
+        
+        .third {
+            /* 对绝对定位的元素居中 将其定位的各个方向都设置成0,然后将margin设为auto*/
+            position: absolute;
+            background: green;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="first"></div>
+    <div class="secParent">
+        <div class="second"></div>
+    </div>
+    <div class="third"></div>
+</body>
+
+</html>
