@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>原生js实现鼠标拖动事件</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+        
+        #box {
+            position: absolute;
+            left: 200px;
+            top: 200px;
+            width: 200px;
+            height: 200px;
+            background: #CCC;
+            text-align: center;
+            line-height: 200px;
+            /*鼠标手势变为移动状态  */
+            cursor: move;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="box">box</div>
+    <script>
+        (function() {
+            var o, distanceX, distanceY;
+            var box = document.getElementById("box");
+
+            // 当box触发鼠标按下事件时,将box对象赋值给o变量,并获取鼠标到box边框的距离
+            box.onmousedown = function(e) {
+                e = e || window.event;
+                o = this;
+                // 鼠标到box边框的距离
+                // 这里用offsetLeft不用o.style.left的原因是box初始化时没有style表明，所以取值会为空
+                distanceX = e.clientX - o.offsetLeft;
+                distanceY = e.clientY - o.offsetTop;
+            };
+
+            // 当整个文档触发鼠标移动事件时,如果有box这个对象,则让其left和top随着鼠标移动而改变
+            document.onmousemove = function(e) {
+                if (!o) {
+                    return;
+                }
+                e = e || window.event;
+                o.style.left = e.clientX - distanceX + "px";
+                o.style.top = e.clientY - distanceY + "px";
+            };
+
+            // 当触发鼠标弹起事件时,将o重置为空,这样就使得鼠标移动事件中box对象无法进行移动
+            document.onmouseup = function() {
+                o = "";
+            };
+        })();
+    </script>
+</body>
+
+</html>
