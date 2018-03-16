@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>css3实现导航条3d特效</title>
+    <style>
+        * {
+            /* 初始化 */
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            background: brown;
+            padding: 40px 0;
+            text-align: center;
+        }
+        
+        .ribbon {
+            display: inline-block;
+        }
+        
+        .ribbon span {
+            background: #FFF;
+            display: inline-block;
+            line-height: 3em;
+            padding: 0 1em;
+            margin-top: 0.5em;
+            /* 这里设置relative是为了后面添加span里before和after的小三角形边框图做定位 */
+            position: relative;
+            /* 让颜色和位置变化有个过渡，感觉上像动画一样 */
+            transition: background-color .3s, margin-top .3s;
+        }
+        
+        .ribbon a {
+            text-decoration: none;
+            color: #333;
+            float: left;
+            /* 总高度设为3.5em */
+            height: 3.5em;
+            /* 超出部分(指的span里before和after的小三角形图)将会隐藏 */
+            overflow: hidden;
+        }
+        
+        .ribbon::before,
+        .ribbon::after {
+            /* 添加.ribbon左右的旗帜形符号 */
+            margin-top: 0.5em;
+            content: "";
+            float: left;
+            border: 1.5em solid #FFF;
+        }
+        
+        .ribbon::before {
+            /* before端左边设为透明看上去就像有个缺口,像旗帜一样 */
+            border-left: 1.5em solid transparent;
+        }
+        
+        .ribbon::after {
+            /* 同上 */
+            border-right: 1.5em solid transparent;
+        }
+        
+        .ribbon a:hover span {
+            background: #DDD;
+            margin-top: 0;
+        }
+        
+        .ribbon span::before {
+            /* 设置span里的小三角形图 */
+            content: "";
+            position: absolute;
+            top: 3em;
+            left: 0;
+            border-right: 0.5em solid #CCC;
+            border-bottom: 0.5em solid #FFF;
+        }
+        
+        .ribbon span::after {
+            /* 设置span里的小三角形图 */
+            content: "";
+            position: absolute;
+            top: 3em;
+            right: 0;
+            border-left: 0.5em solid #CCC;
+            border-bottom: 0.5em solid #FFF;
+        }
+        /* border构建图形的用法具体参照CSS/border */
+    </style>
+</head>
+
+<body>
+    <div class='ribbon'>
+        <a href='#'><span>Home</span></a>
+        <a href='#'><span>About</span></a>
+        <a href='#'><span>Services</span></a>
+        <a href='#'><span>Contact</span></a>
+    </div>
+</body>
+
+</html>
