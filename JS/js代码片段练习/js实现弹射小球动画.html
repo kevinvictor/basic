@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>原生js实现确定速度不确定方向的弹射小球</title>
+</head>
+
+<body>
+    <div id="box" style="width:500px;height:500px;background:grey;position: relative;">
+        <div id="ball" style="width:10px;height:10px;border-radius:5px;position: absolute;background:red;"></div>
+    </div>
+    <script>
+        (function fn(v) {
+            //  定义小球在x和y方向的分速度
+            let vX = Math.random() * v,
+                vY = Math.sqrt(v * v - vX * vX);
+            // 定义小球起始位置的坐标
+            let startX = Math.random() * 500,
+                startY = Math.random() * 500;
+            // 获取小球对象
+            const ball = document.getElementById("ball");
+            // 初始化小球的起始位置
+            ball.style.left = startX + "px";
+            ball.style.top = startY + "px";
+
+            // 小球弹射动画函数
+            function animate() {
+                // 小球到达边界的时候,另其相应方向上的速度为其相反值
+                if (startX <= 0 || startX >= 490) {
+                    vX = -vX;
+                }
+                if (startY <= 0 || startY >= 490) {
+                    vY = -vY;
+                }
+                // 小球的下一位置为原坐标加上其方向上的速度
+                startX += vX;
+                startY += vY;
+                ball.style.left = startX + "px";
+                ball.style.top = startY + "px";
+                // 类似settimeout,setinterval一样的新增定时器,不需要设定时间,表示一帧(16豪秒)执行一次,循环调用
+                window.requestAnimationFrame(animate);
+            }
+            // 起始时调用
+            window.requestAnimationFrame(animate);
+        })(3);
+    </script>
+</body>
+
+</html>
