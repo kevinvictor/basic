@@ -50,8 +50,17 @@
                     return;
                 }
                 e = e || window.event;
-                o.style.left = e.clientX - distanceX + "px";
-                o.style.top = e.clientY - distanceY + "px";
+                // 获取窗口的宽高
+                var winX = document.documentElement.clientWidth || document.body.clientWidth,
+                    winY = document.documentElement.clientHeight || document.body.clientHeight,
+                    // 元素当前位置距离窗口左边和上边的距离
+                    l = e.clientX - distanceX,
+                    h = e.clientY - distanceY;
+                // 如果元素超出了窗口的边界，则返回到边界值
+                l = l < 0 ? 0 : l > winX - o.offsetWidth ? winX - o.offsetWidth : l;
+                h = h < 0 ? 0 : h > winY - o.offsetHeight ? winY - o.offsetHeight : h;
+                o.style.left = l + "px";
+                o.style.top = h + "px";
             };
 
             // 当触发鼠标弹起事件时,将o重置为空,这样就使得鼠标移动事件中box对象无法进行移动
