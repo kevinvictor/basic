@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>左边固定右边自适应布局的几种方法</title>
+    <style>
+        body,
+        div {
+            margin: 0;
+            padding: 0;
+        }
+        
+        body>div {
+            margin-bottom: 20px;
+        }
+        
+        .first {
+            /* 第一种:通过将自适应的盒子宽度设为100%,
+            左边用padding-left将固定盒子位置留出来,
+            以绝对定位的方式固定到左边.
+            缺点:只是通过绝对定位将自适应的部分覆盖,表观上
+            看上去像是左固定右自适应,一旦两元素高度不一致,就能
+            看出自适应部分沾满了整个宽度.适用于高度一致时的情况(不推荐)*/
+            position: relative;
+            border: 1px solid;
+        }
+        
+        .fir-left {
+            width: 100px;
+            height: 100px;
+            background: red;
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        
+        .fir-right {
+            /* 需要设置box-sizing: border-box;否则宽度100%后再paddin-left会超出100% */
+            box-sizing: border-box;
+            width: 100%;
+            height: 100px;
+            padding-left: 100px;
+            background: blue;
+        }
+        
+        .second {
+            /* 第二种:通过固定盒子左浮动或者绝对定位的方式,
+            右边盒子设置margin-left为左边宽度的方式实现(推荐) */
+            border: 1px solid;
+            position: relative;
+        }
+        
+        .sec-left {
+            width: 100px;
+            height: 100px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            /* float: left; */
+            background: brown;
+        }
+        
+        .sec-right {
+            margin-left: 100px;
+            height: 150px;
+            background: aqua;
+        }
+        
+        .third {
+            /* 第三种:通过左边固定浮动,右边设为BFC块级元素实现(推荐) */
+            border: 1px solid;
+        }
+        
+        .trd-left {
+            float: left;
+            width: 100px;
+            height: 100px;
+            background: black;
+        }
+        
+        .trd-right {
+            height: 150px;
+            /* 设为BFC块级元素 */
+            overflow: auto;
+            background: yellow;
+        }
+        
+        .forth {
+            /* 第四种:将父容器display设为table,宽度100%,子容器display设为table-cell
+            的方式实现.
+            缺点:两元素的高度随较高者决定,高度需一致,并且考虑兼容问题(不推荐) */
+            display: table;
+            width: 100%;
+            box-sizing: border-box;
+            border: 1px solid;
+        }
+        
+        .frh-left {
+            display: table-cell;
+            width: 100px;
+            height: 100px;
+            background: yellowgreen;
+        }
+        
+        .frh-right {
+            display: table-cell;
+            background: green;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="first">
+        <div class="fir-left">左边内容</div>
+        <div class="fir-right">右边内容</div>
+    </div>
+    <div class="second">
+        <div class="sec-left">左边内容</div>
+        <div class="sec-right">右边内容</div>
+    </div>
+    <div class="third">
+        <div class="trd-left">左边内容</div>
+        <div class="trd-right">右边内容</div>
+    </div>
+    <div class="forth">
+        <div class="frh-left">左边内容</div>
+        <div class="frh-right">右边内容</div>
+    </div>
+</body>
+
+</html>
