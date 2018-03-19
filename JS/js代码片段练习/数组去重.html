@@ -55,6 +55,14 @@
             return newArr;
         }
         console.log("原数组：", arr, " 去重后的数组：", quitRepeat3(arr));
+
+        // 利用数组filter方法去重
+        function quitRepeat4(arr) {
+            return arr.filter(function(ele, index, self) {
+                return self.indexOf(ele) === index;
+            });
+        }
+        console.log("去重后:", quitRepeat4(arr));
     </script>
 </body>
 

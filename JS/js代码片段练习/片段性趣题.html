@@ -15,10 +15,44 @@
         // 5 的倍数时输出 "buzz"，
         // 同时为3和5的倍数时输出 "fizzbuzz"。
 
-        for (let i = 1; i <= 100; i++) {
-            let three = i % 3 === 0,
-                five = i % 5 === 0;
-            three ? (five ? console.log(i, "fizzbuzz") : console.log(i, "fizz")) : (five ? console.log(i, "buzz") : i);
+        // for (let i = 1; i <= 100; i++) {
+        //     let three = i % 3 === 0,
+        //         five = i % 5 === 0;
+        //     three ? (five ? console.log(i, "fizzbuzz") : console.log(i, "fizz")) : (five ? console.log(i, "buzz") : i);
+        // }
+
+        // 在一个Array中，删掉偶数，只保留奇数
+        {
+            let arr = [1, 2, 3, 4, 7, 8, 9];
+            let newArr = arr.filter(function(ele) {
+                return ele % 2 !== 0;
+            });
+            console.log(newArr);
+        }
+
+        // 用filter方法筛选100以内素数
+        {
+            function getSushu(arr) {
+                return arr.filter(function(element) {
+                    let flag = true;
+                    if (element < 2) {
+                        flag = false;
+                    }
+                    for (let i = 2; i < element - 1; i++) {
+                        if (element % i === 0) {
+                            flag = false;
+                            break;
+                        }
+                    }
+                    return flag;
+                })
+            }
+
+            let arr = [];
+            for (let i = 1; i <= 100; i++) {
+                arr.push(i);
+            }
+            console.log(arr, getSushu(arr));
         }
     </script>
 </body>
